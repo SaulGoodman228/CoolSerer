@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile_web
-    command:  uvicorn main:app --reload --port 8002
+    command:  uvicorn main:app --reload --port 8002 --host 0.0.0.0
 
     ports:
       - 8002:8002
