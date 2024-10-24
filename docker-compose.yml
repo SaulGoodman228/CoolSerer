@@ -16,6 +16,7 @@ services:
     depends_on:
       - db
   db:
+    container_name: cooldb
     restart: on-failure
     image: postgres:14.4-alpine
     volumes:
