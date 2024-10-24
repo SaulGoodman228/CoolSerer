@@ -1,23 +1,23 @@
-# Создание ссылки базы данных SQLAlchemy
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from sqlalchemy.orm import sessionmaker
-import os
 
-DB_USER = os.environ.get("DB_USER")
-DB_PASSWORD = os.environ.get("DB_PASSWORD")
-DB_HOST = os.environ.get("DB_HOST")
-DB_PORT = os.environ.get("DB_PORT")
-DB_NAME = os.environ.get("DB_NAME")
+from fastapi import FastAPI
+from starlette.requests import Request
 
-DATABASE_URL = (
-    f"postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@"
-    + f"{DB_HOST}:{DB_PORT}/{DB_NAME}"
-)
+from services import save_user_objects, get_user_objects
+from settings import *
+app = FastAPI()
 
-# Создание асинхронного движка SQLAlchemy
-async_engine = create_async_engine(DATABASE_URL, echo=True)
 
-# Создание фабрики сессий SQLAlchemy
-async_session = sessionmaker(
-    bind=async_engine, class_=AsyncSession, expire_on_commit=False
-)
+
+
+@app.post('/save')
+async def save_data(request: Request):
+    body = await request.json()
+    await save_user_objects(body["username"], body["objects"])
+
+
+
+@app.post('/get')
+async def get_data(request: Request):
+    body = await request.json()
+    objects =await get_user_objects(body["username"])
+    return objects

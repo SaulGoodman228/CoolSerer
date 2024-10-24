@@ -1,0 +1,36 @@
+version: '3.7'
+services:
+#  web:
+#    restart: on-failure
+#    container_name: web
+#    build:
+#      context: .
+#      dockerfile: Dockerfile_web
+#    command:  uvicorn main:app --reload
+#
+#    ports:
+#      - 8000:8000
+#
+#    env_file:
+#      - ./.env
+#    depends_on:
+#      - db
+  db:
+    restart: on-failure
+    image: postgres:14.4-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+
+    environment:
+      - POSTGRES_USER=daniil
+      - POSTGRES_PASSWORD=daniil1234
+      - POSTGRES_DB=detected_objects
+volumes:
+  postgres_data:
+
+
+#docker compose -f docker-compose.dev.yml up -d
+#docker exec telediskweb-telediskWeb-1 python teledisk_txt/manage.py makemigrations messagereciver
+#docker exec telediskweb-telediskWeb-1 python teledisk_txt/manage.py migrate
