@@ -22,12 +22,10 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     ports:
       - 8945:8945
-#    expose:
-#      - 89475
     environment:
       - POSTGRES_USER=daniil
       - POSTGRES_PASSWORD=daniil1234
       - POSTGRES_DB=detected_objects
-      - POSTGRES_PORT=8945
+    command: -p 8945
 volumes:
   postgres_data:
