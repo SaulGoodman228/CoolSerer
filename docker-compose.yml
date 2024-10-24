@@ -20,13 +20,14 @@ services:
     image: postgres:14.4-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-#    ports:
-#      - 5432:5432
-    expose:
-      - 5432
+    ports:
+      - 89475:89475
+#    expose:
+#      - 89475
     environment:
       - POSTGRES_USER=daniil
       - POSTGRES_PASSWORD=daniil1234
       - POSTGRES_DB=detected_objects
+      - POSTGRES_PORT=89475
 volumes:
   postgres_data:
